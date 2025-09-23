@@ -1,1 +1,1 @@
-# anomaly_spotter
+# anomaly-spotter
