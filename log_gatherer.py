@@ -30,7 +30,7 @@ class LogGatherer:
     # Initializes the log gatherer and sets up a cache directory where the downloaded logs will be stored
     def __init__(self, cache_dir="./logs"):
 
-        # This path object is useful because it automatically uses the correct seperator for the OS being used.
+        # This path handles different seperators for the OS being used.
         self.cache_dir = Path(cache_dir)
 
         # creates a cache directory for dataset ONLY if it doesnt exist already
@@ -72,7 +72,7 @@ class LogGatherer:
         
         # This part tries to  download and extract the file, and handles all the download errors that could happen
         try:
-             # Downloads the file from Zenodo (the timeout 300 means waiting up to 5 minutes to download. The stream=true means downloading in chunks to save memory)
+             # Downloads the file from Zenodo, timeout=300 for large files (5 minutes) and stream=True for saving memory
             response = requests.get(url, timeout=300, stream=True)
 
             # Checks if download was successful
@@ -109,7 +109,7 @@ class LogGatherer:
     # We will use this method for training and developing our model
     def read_logs(self, max_lines=None):
 
-        #Before we are able to read logs, we need to make sure the file exists on our computer. This line checks for that.
+        # Makes sure log file is downloaded first
         log_file = self.download()
 
         # Initializes an empty list to store log lines
@@ -140,7 +140,7 @@ class LogGatherer:
     # We will use this method for real-time anomoly detection on the full dataset
     def stream_logs(self):
 
-        #Before we are able to read logs, we need to make sure the file exists on our computer. This line checks for that.
+        #Make sure log file is downloaded first
         log_file = self.download()
         
         # Opens the file for reading
