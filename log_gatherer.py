@@ -50,14 +50,14 @@ class LogGatherer:
 
     
     # Downloads and extracts a log dataset from Zenodo.
-    def download(self, dataset_name):
+    def download(self):
 
         log_file = self.cache_dir / "Linux" / "Linux.log"
         
         # checks to see if we have the extracted log file already. If thats the case, we don't need to download or extract anything
         if log_file.exists():
             # Will print this if already downloaded to let the user know
-            print(f"Found cached file:: {log_file}")
+            print(f"Found cached file: {log_file}")
             return log_file
         
         # creates the download URL
