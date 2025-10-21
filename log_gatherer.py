@@ -3,15 +3,14 @@
 Log Gatherer Component
 Senior Project: Linux Anomaly Detection System
 Team: Marlowe Elmiger, Miles Lindsey, Tockukwu Okwudire
-Date: [Date]
+Date: 10/21/2025
 
 
 """
 
-import os
+
 import requests
 import tarfile
-import zipfile
 from pathlib import Path
 
 
