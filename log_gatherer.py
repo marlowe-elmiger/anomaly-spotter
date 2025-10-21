@@ -107,10 +107,10 @@ class LogGatherer:
     
     # reads logs from dataset into memory (can be very memory intensive/ good for smaller datasets or when you need random access to logs)
     # We will use this method for training and developing our model
-    def read_logs(self, dataset_name, max_lines=None):
+    def read_logs(self, max_lines=None):
 
         #Before we are able to read logs, we need to make sure the file exists on our computer. This line checks for that.
-        log_file = self.download(dataset_name)
+        log_file = self.download()
 
         # Initializes an empty list to store log lines
         logs = []
@@ -138,10 +138,10 @@ class LogGatherer:
 
     # This method can handle millions of logs without crashing (is more memory efficient than reading logs into memory)
     # We will use this method for real-time anomoly detection on the full dataset
-    def stream_logs(self, dataset_name):
+    def stream_logs(self):
 
         #Before we are able to read logs, we need to make sure the file exists on our computer. This line checks for that.
-        log_file = self.download(dataset_name)
+        log_file = self.download()
         
         # Opens the file for reading
         with open(log_file, 'r', encoding='utf-8', errors='ignore') as f:
@@ -169,7 +169,7 @@ if __name__ == "__main__":
     print("\nMethod 1: Reading logs into memory\n")
     
     # Reads the first 10 lines from the Linux dataset using read_log method
-    logs = gatherer.read_logs("Linux", max_lines=10)
+    logs = gatherer.read_logs( max_lines=10)
     print(f"\nRead {len(logs)} lines from Linux logs:")
     
     #creates a numbered list as well as log content
@@ -185,7 +185,7 @@ if __name__ == "__main__":
     print("\nStreaming logs (first 5 only):\n")
     
     #creates a numbered list as well as log content
-    for i, log in enumerate(gatherer.stream_logs("Linux"), 1):
+    for i, log in enumerate(gatherer.stream_logs(), 1):
 
         # log[:80] takes only the first 80 characters so the lines arent too long
         print(f"  {i}. {log[:80]}...")
