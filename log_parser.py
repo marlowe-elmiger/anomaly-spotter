@@ -54,11 +54,36 @@ class LogParser:
             # couldnt parse
             return None  
 
+    # Transforms a list of raw log lines into a list of parsed ones. Does this all in one go.
+    def parse_all(self, log_lines):
+
+        # Empty list to store the results
+        parsed = []
+
+        for log in log_lines:
+
+            # parses individual log in list
+            result = self.parse(log)
+            if result:
+
+                # If successful, stores the parsed log in the list
+                parsed.append(result)
+        
+        # returns list of all parsed logs
+        return parsed
 
 # testing
 if __name__ == "__main__":
     parser = LogParser()
     
-    log_test = "Jun  9 06:06:20 combo syslogd 1.4.1: restart."
-    result = parser.parse(log_test)
-    print(f"\nTest:\n\n {result}\n")
+    test_logs = [
+        "Jun  9 06:06:20 combo syslogd 1.4.1: restart.",
+        "Jun  9 06:06:20 combo syslog: syslogd startup succeeded",
+        "Jun  9 06:06:20 combo syslog: klogd startup succeeded"
+    ]
+    
+    results = parser.parse_all(test_logs)
+    print(f"\n\nParsed {len(results)} logs\n")
+    print(results[2])
+    print(results[1])
+    print(results[0])
