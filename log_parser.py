@@ -8,13 +8,31 @@ Date: 10/22/2025
 
 """
 
+# Supports regular expressions
+import re
 
 class LogParser:
     # parses Linux syslog messages and turns them into organized data
     
-    # For this function, i'll have to add regex patterns 
+    
     def __init__(self):
-        pass
+        
+        # regex pattern for parsing syslog layout
+        # format- timestamp, hostname, process, then message
+        self.pattern = re.compile(
+
+            # timestamp
+            r'(\w+\s+\d+\s+\d+:\d+:\d+)\s+'
+
+            # hostname  
+            r'(\S+)\s+'
+
+            # process name                       
+            r'([^:]+):\s+' 
+
+            # rest is the message                   
+            r'(.+)'                           
+        )
     
     # This function will be for implementing the parsing logic
     def parse(self, log_line):
