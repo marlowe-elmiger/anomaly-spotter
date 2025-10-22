@@ -175,8 +175,8 @@ if __name__ == "__main__":
     #creates a numbered list as well as log content
     for i, log in enumerate(logs, 1):
 
-        # log[:80] takes only the first 80 characters so the lines arent too long
-        print(f"  {i}. {log[:80]}...")
+        #prints logs
+        print(f"  {i}. {log}")
     
     
     print("\nMethod 2: Streaming logs")
@@ -187,8 +187,8 @@ if __name__ == "__main__":
     #creates a numbered list as well as log content
     for i, log in enumerate(gatherer.stream_logs(), 1):
 
-        # log[:80] takes only the first 80 characters so the lines arent too long
-        print(f"  {i}. {log[:80]}...")
+        #prints logs
+        print(f"  {i}. {log}")
 
         # Stop after 5 examples
         if i >= 5:
