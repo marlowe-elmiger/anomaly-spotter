@@ -34,10 +34,25 @@ class LogParser:
             r'(.+)'                           
         )
     
-    # This function will be for implementing the parsing logic
+    # parses a single log line 
     def parse(self, log_line):
-        # will return dictionary with timestamp, hostname, process, and message
-        return None
+
+
+        # matches the log_line text with the regex pattern
+        match = self.pattern.match(log_line)
+        
+        #if there is a match
+        if match:
+            #pairs the matched groups into a dictionary
+            return {
+                'timestamp': match.group(1),
+                'hostname': match.group(2),
+                'process': match.group(3),
+                'message': match.group(4)
+            }
+        else:
+            # couldnt parse
+            return None  
 
 
 # testing
@@ -46,4 +61,4 @@ if __name__ == "__main__":
     
     log_test = "Jun  9 06:06:20 combo syslogd 1.4.1: restart."
     result = parser.parse(log_test)
-    print(f"Test: {result}")
+    print(f"\nTest:\n\n {result}\n")
