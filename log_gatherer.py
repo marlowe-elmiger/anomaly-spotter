@@ -157,7 +157,6 @@ class LogGatherer:
                     yield line
 
 # This code right here is meant for testing purposes 
-# When imported as a module, it wont run.
 if __name__ == "__main__":
 
     # Creates an instance of LogGatherer

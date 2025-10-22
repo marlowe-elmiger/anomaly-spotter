@@ -8,7 +8,7 @@ Date: 10/22/2025
 
 """
 
-# Supports regular expressions
+
 import re
 
 class LogParser:
@@ -74,16 +74,39 @@ class LogParser:
 
 # testing
 if __name__ == "__main__":
+
+    from log_gatherer import LogGatherer
+    
+    print("\nTESTING:")
+
+     # Get some logs
+    gatherer = LogGatherer()
+    unparsed_logs = gatherer.read_logs(max_lines=5)
+
+    # Parse them
     parser = LogParser()
-    
-    test_logs = [
-        "Jun  9 06:06:20 combo syslogd 1.4.1: restart.",
-        "Jun  9 06:06:20 combo syslog: syslogd startup succeeded",
-        "Jun  9 06:06:20 combo syslog: klogd startup succeeded"
-    ]
-    
-    results = parser.parse_all(test_logs)
-    print(f"\n\nParsed {len(results)} logs\n")
-    print(results[2])
-    print(results[1])
-    print(results[0])
+
+    print("\nParsing first 5 logs:")
+    for i, log in enumerate(unparsed_logs, 1):
+        parsed = parser.parse(log)
+        print(f"\n{i}. {log}...")
+        if parsed:
+            print(f"   Parsed:")
+            print(f"     Timestamp: {parsed['timestamp']}")
+            print(f"     Hostname:  {parsed['hostname']}")
+            print(f"     Process:   {parsed['process']}")
+            print(f"     Message:   {parsed['message']}...")
+        else:
+            print(f"   Failed to parse")
+
+
+    print("\nTesting parse_all() function\n")
+
+    all_logs = gatherer.read_logs(max_lines=500)
+    parsed_logs = parser.parse_all(all_logs)
+
+    print(f"\nTotal logs: {len(all_logs)}")
+    print(f"Parsed successfully: {len(parsed_logs)}\n\n")
+
+    print("Last log stored:\n")
+    print(parsed_logs[499])
