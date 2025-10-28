@@ -2,7 +2,7 @@
 Feature Extraction Component
 Senior Project: Linux Anomaly Detection System
 Team: Marlowe Elmiger, Miles Lindsey, Tockukwu Okwudire
-Date: 10/22/2025
+Date: 10/28/2025
 
 
 """
@@ -46,7 +46,22 @@ class FeatureExtractor:
     # This function will be the nitty gritty of the feature extraction
     def extract(self, parsed_log):
     
-        return []
+        message = parsed_log['message'].lower()
+        
+        features = []
+        
+        # finds message length
+        features.append(len(message))
+        
+        # finds number of words
+        features.append(len(message.split()))
+        
+        # checks for error keywords 
+        for keyword in self.error_keywords:
+            features.append(1 if keyword in message else 0)
+        
+        # returns features in a vector format
+        return features
 
 
 # testing
@@ -54,6 +69,10 @@ if __name__ == "__main__":
     extractor = FeatureExtractor()
     
     log_test = {
+        'timestamp': 'Jun  9 06:06:20',
+        'hostname': 'combo',
+        'process': 'syslogd 1.4.1',
+        'message': 'restart. error. warning'
     }
     
     features = extractor.extract(log_test)
