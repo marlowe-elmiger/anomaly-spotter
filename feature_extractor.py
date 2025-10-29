@@ -63,17 +63,44 @@ class FeatureExtractor:
         # returns features in a vector format
         return features
 
+    
+    
+    def extract_all(self, parsed_logs):
+        
+        # Will store all the feature vectors we extract
+        feature_list = []
+        
+        for log in parsed_logs:
+            # extracts features from each individual log
+            features = self.extract(log)
+
+            # adds feature vector to the list
+            feature_list.append(features)
+        
+        # returns all features
+        return feature_list
 
 # testing
 if __name__ == "__main__":
+
+    from log_gatherer import LogGatherer
+    from log_parser import LogParser
+
+    gatherer = LogGatherer()
+    parser = LogParser()
     extractor = FeatureExtractor()
     
-    log_test = {
+    test_log = {
         'timestamp': 'Jun  9 06:06:20',
         'hostname': 'combo',
         'process': 'syslogd 1.4.1',
-        'message': 'restart. error. warning'
+        'message': 'restart.'
     }
     
-    features = extractor.extract(log_test)
-    print(f"Features: {features}")
+    all_logs = gatherer.read_logs(max_lines=500)
+    all_parsed = parser.parse_all(all_logs)
+    all_features = extractor.extract_all(all_parsed)
+    
+    print(f"\nExtracted features from {len(all_features)} logs")
+    
+    print(f"\nExample: {all_features[499]}")
