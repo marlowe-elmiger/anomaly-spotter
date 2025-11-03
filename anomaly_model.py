@@ -81,7 +81,7 @@ if __name__ == "__main__":
     
     
     print("Training model...")
-    detector = AnomalyModel(contamination=0.015)
+    detector = AnomalyModel(contamination=0.0125)
     detector.train(features)
    
     
@@ -97,7 +97,7 @@ if __name__ == "__main__":
     for pred, log in zip(predictions, parsed):
         if pred == -1:
             shown += 1
-            print(f"  {shown}. [{log['process']}] {log['message']}...")
+            print(f"  {shown}. [{log['process']}] {log['message']}")
             if shown >= 30:
                 break
 
@@ -106,6 +106,6 @@ if __name__ == "__main__":
     detector.save("trained_model.pkl")
     new_detector = AnomalyModel()
     new_detector.load("trained_model.pkl")
-    test_pred = new_detector.predict([features[0]])
+    
     
     
