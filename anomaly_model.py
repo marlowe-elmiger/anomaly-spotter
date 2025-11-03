@@ -12,15 +12,24 @@ from sklearn.ensemble import IsolationForest
 
 class AnomalyModel:
 
-    def __init__(self):
+    def __init__(self, contamination=0.02):
 
 
-        # isolation forest model
+        self.contamination = contamination
         self.model = None
     
-    # This function will train the model using feature vectors from feature_extractor component
+    
     def train(self, features):
-        pass
+
+        # creates and trains isolation forest
+        self.model = IsolationForest(
+            contamination=self.contamination,
+            # for reproducibility (can be any number really)
+            random_state=0  
+        )
+        
+        self.model.fit(features)
+        print(f"Model trained on {len(features)} samples")
     
     # This function will predict if the features indicate an anomaly or not
     def predict(self, features):
@@ -31,3 +40,4 @@ class AnomalyModel:
 # testing
 if __name__ == "__main__":
     detector = AnomalyModel()
+    print("done")
