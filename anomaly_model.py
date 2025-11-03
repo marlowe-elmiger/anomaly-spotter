@@ -50,6 +50,14 @@ class AnomalyModel:
         with open(filepath, 'wb') as f:
             pickle.dump(self.model, f)
         print(f"Model saved to {filepath}")
+    
+    # This function loads trained model from file
+    def load(self, filepath):
+
+        # Opens the file in binary read mode and loads the model from pickle
+        with open(filepath, 'rb') as f:
+            self.model = pickle.load(f)
+        print(f"Model loaded from {filepath}")
 
 
 # testing
