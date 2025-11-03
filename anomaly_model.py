@@ -2,7 +2,7 @@
 Anomaly Model Component
 Senior Project: Linux Anomaly Detection System
 Team: Marlowe Elmiger, Miles Lindsey, Tockukwu Okwudire
-Date: 11/2/2025
+Date: 11/3/2025
 
 
 """
@@ -34,7 +34,11 @@ class AnomalyModel:
     # This function will predict if the features indicate an anomaly or not
     def predict(self, features):
         
-        return None
+         if self.model is None:
+            raise ValueError("Model not trained yet.")
+        
+        #  will return 1 for normal and -1 for anomaly
+        return self.model.predict(features)
 
 
 # testing
