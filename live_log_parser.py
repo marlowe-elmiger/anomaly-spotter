@@ -2,7 +2,7 @@
 Live Log Parser Component
 Senior Project: Linux Anomaly Detection System
 Team: Marlowe Elmiger, Miles Lindsey, Tockukwu Okwudire
-Date: 11/08/2025
+Date: 11/30/2025
 """
 
 import subprocess
@@ -57,11 +57,16 @@ class LiveLogParser:
                                     'kernel panic', 'segmentation fault', 'core dumped']
                 has_critical = any(kw in parsed['message'].lower() for kw in critical_keywords)
 
-                # Alert if either condition is met
+                 # Alert if EITHER condition is met
                 if ml_prediction == -1 or has_critical:
-                    if has_critical and ml_prediction == 1:
-                        print(f"    (Keyword-based detection)")
-                    send_alert("anomaly detected")
+                    alert_message = (f"Anomaly Detected!\n"
+                                     f"Timestamp: {parsed['timestamp']}\n"
+                                     f"Host: {parsed['hostname']}\n"
+                                     f"Process: {parsed['process']}\n"
+                                     f"Message: {parsed['message']}\n"
+                                     f"ML Prediction: {'Anomaly' if ml_prediction == -1 else 'Normal'}\n"
+                                     f"Critical Keywords Found: {'Yes' if has_critical else 'No'}")
+                    send_alert(alert_message)
 
         except KeyboardInterrupt:
             print("\nNo longer monitoring.")

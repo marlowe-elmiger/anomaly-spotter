@@ -11,7 +11,7 @@ WEBHOOK_URL = "https://discordapp.com/api/webhooks/1421173634461859984/hRHsfdT0X
 
 
 def send_alert(message):
-    data = {"content": message}
+    data = {"content": message, "username": "Linux Alert"}
     
     try:
         response = requests.post(WEBHOOK_URL, json=data, timeout=10)
