@@ -136,27 +136,7 @@ class LogGatherer:
         return logs
     
 
-    # This method can handle millions of logs without crashing (is more memory efficient than reading logs into memory)
-    # We will use this method for real-time anomoly detection on the full dataset
-    def stream_logs(self):
-
-        #Make sure log file is downloaded first
-        log_file = self.download()
-        
-        # Opens the file for reading
-        with open(log_file, 'r', encoding='utf-8', errors='ignore') as f:
-
-            # Iterate through each line in the file
-            for line in f:
-
-                #removes whitespace
-                line = line.strip()
-                # skips empty lines
-                if line:
-                    # returns one line at a time then pauses
-                    yield line
-
-# This code right here is meant for testing purposes 
+# Testing
 if __name__ == "__main__":
 
     # Creates an instance of LogGatherer
@@ -165,7 +145,6 @@ if __name__ == "__main__":
     
     print("\nTESTING:")
     
-    print("\nMethod 1: Reading logs into memory\n")
     
     # Reads the first 10 lines from the Linux dataset using read_log method
     logs = gatherer.read_logs( max_lines=10)
@@ -178,20 +157,7 @@ if __name__ == "__main__":
         print(f"  {i}. {log}")
     
     
-    print("\nMethod 2: Streaming logs")
-    
-    # Streams the first 5 lines from the Linux dataset using stream_log method
-    print("\nStreaming logs (first 5 only):\n")
-    
-    #creates a numbered list as well as log content
-    for i, log in enumerate(gatherer.stream_logs(), 1):
 
-        #prints logs
-        print(f"  {i}. {log}")
-
-        # Stop after 5 examples
-        if i >= 5:
-            break
     
     
     
