@@ -3,7 +3,7 @@
 Log Gatherer Component
 Senior Project: Linux Anomaly Detection System
 Team: Marlowe Elmiger, Miles Lindsey, Tockukwu Okwudire
-Date: 10/21/2025
+Date: 12/4/2025
 
 
 """
@@ -135,7 +135,7 @@ class LogGatherer:
 # Testing
 if __name__ == "__main__":
 
-    # Creates an instance of LogGatherer
+    
     gatherer = LogGatherer()
     
     
@@ -148,7 +148,6 @@ if __name__ == "__main__":
     
     for i, log in enumerate(logs, 1):
 
-        #prints logs
         print(f"  {i}. {log}")
     
     

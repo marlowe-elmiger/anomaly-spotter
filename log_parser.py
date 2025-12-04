@@ -3,7 +3,7 @@
 Log Parser Component
 Senior Project: Linux Anomaly Detection System
 Team: Marlowe Elmiger, Miles Lindsey, Tockukwu Okwudire
-Date: 10/22/2025
+Date: 12/4/2025
 
 
 """
@@ -41,7 +41,7 @@ class LogParser:
         # matches the log_line text with the regex pattern
         match = self.pattern.match(log_line)
         
-        #if there is a match
+        
         if match:
             #pairs the matched groups into a dictionary
             return {
@@ -51,13 +51,13 @@ class LogParser:
                 'message': match.group(4)
             }
         else:
-            # couldnt parse
+            
             return None  
 
     # Transforms a list of raw log lines into a list of parsed ones. Does this all in one go.
     def parse_all(self, log_lines):
 
-        # Empty list to store the results
+        
         parsed = []
 
         for log in log_lines:
@@ -79,11 +79,11 @@ if __name__ == "__main__":
     
     print("\nTESTING:")
 
-     # Get some logs
+     
     gatherer = LogGatherer()
     unparsed_logs = gatherer.read_logs(max_lines=5)
 
-    # Parse them
+    
     parser = LogParser()
 
     print("\nParsing first 5 logs:")

@@ -2,7 +2,7 @@
 Feature Extraction Component
 Senior Project: Linux Anomaly Detection System
 Team: Marlowe Elmiger, Miles Lindsey, Tockukwu Okwudire
-Date: 10/28/2025
+Date: 12/4/2025
 
 
 """
@@ -77,7 +77,7 @@ class FeatureExtractor:
             # adds feature vector to the list
             feature_list.append(features)
         
-        # returns all features
+       
         return feature_list
 
 # testing

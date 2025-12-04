@@ -1,8 +1,8 @@
 """
-Alert
+Alert Component
 Senior Project: Linux Anomaly Detection System
 Team: Marlowe Elmiger, Miles Lindsey, Tockukwu Okwudire
-Date: 11/8/2025
+Date: 12/4/2025
 """
 
 import requests
@@ -24,7 +24,7 @@ def send_alert(message):
 
 
 def test_alert():
-    send_alert("Test alert - system online")
+    send_alert("Testing alert")
 
 
 if __name__ == "__main__":
