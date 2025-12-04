@@ -21,7 +21,7 @@ class LogGatherer:
     # The loghub datasets are hosted on a platform called Zenodo
 
 
-    # The Zenodo record ID where LogHub datasets are stored
+    
     # This ID will be used in the download URL below
     ZENODO_RECORD = "8196385"
     
@@ -30,43 +30,43 @@ class LogGatherer:
     # Initializes the log gatherer and sets up a cache directory where the downloaded logs will be stored
     def __init__(self, cache_dir="./logs"):
 
-        # This path handles different seperators for the OS being used.
+        
         self.cache_dir = Path(cache_dir)
 
         # creates a cache directory for dataset ONLY if it doesnt exist already
         self.cache_dir.mkdir(exist_ok=True)
 
-        # URL for downloading from Zenodo
+        
         self.base_url = f"https://zenodo.org/records/{self.ZENODO_RECORD}/files"
     
 
     # Extracts a compressed archive
     def _extract_archive(self, archive_path, extract_to):
 
-        # Opens the tar.gz file in read mode ('r:gz' means read with gzip compression)
+        # Opens the tar.gz file in read mode
         with tarfile.open(archive_path, 'r:gz') as tar:
             # Extracts all files from the archive to the destination directory
             tar.extractall(extract_to)
 
     
-    # Downloads and extracts a log dataset from Zenodo.
+    # Downloads and extracts a log dataset from Zenodo
     def download(self):
 
         log_file = self.cache_dir / "Linux" / "Linux.log"
         
-        # checks to see if we have the extracted log file already. If thats the case, we don't need to download or extract anything
+        
         if log_file.exists():
-            # Will print this if already downloaded to let the user know
+            
             print(f"Found cached file: {log_file}")
             return log_file
         
         # creates the download URL
         url = f"{self.base_url}/Linux.tar.gz?download=1"
 
-        # makes the local save path
+       
         archive_path = self.cache_dir / "Linux.tar.gz"
         
-        # prints the status so users know whats actually going on
+        
         print(f"Downloading Linux logs from Zenodo...")
         
         
@@ -75,7 +75,7 @@ class LogGatherer:
              # Downloads the file from Zenodo, timeout=300 for large files (5 minutes) and stream=True for saving memory
             response = requests.get(url, timeout=300, stream=True)
 
-            # Checks if download was successful
+            
             response.raise_for_status()
             
             # Saves to a file in 8KB chunks to handle large downloads efficiently
@@ -99,37 +99,33 @@ class LogGatherer:
             # Returns the path to the extracted log file
             return log_file
         
-        # If download fails
+        
         except requests.exceptions.RequestException as e:
-            # Shows error message
+            
             print(f"Failed to download Linux logs: {e}")
             raise
     
-    # reads logs from dataset into memory (can be very memory intensive/ good for smaller datasets or when you need random access to logs)
-    # We will use this method for training and developing our model
+    # reads logs from dataset into memory 
     def read_logs(self, max_lines=None):
 
         # Makes sure log file is downloaded first
         log_file = self.download()
 
-        # Initializes an empty list to store log lines
+       
         logs = []
         
         # Opens the file for reading
         with open(log_file, 'r', encoding='utf-8', errors='ignore') as f:
 
-            # Iterates through each line in the file
+            
             for i, line in enumerate(f):
 
-                #removes whitespace
                 line = line.strip()
-
-                # skips empty lines
+                
                 if line:
-                    # Appends this log line to our list
+                    
                     logs.append(line)
 
-                # Checks if we've read enough lines
                 if max_lines and i + 1 >= max_lines:
                     break
         # Returns the complete list of log lines
@@ -150,7 +146,6 @@ if __name__ == "__main__":
     logs = gatherer.read_logs( max_lines=10)
     print(f"\nRead {len(logs)} lines from Linux logs:")
     
-    #creates a numbered list as well as log content
     for i, log in enumerate(logs, 1):
 
         #prints logs
